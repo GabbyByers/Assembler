@@ -1,0 +1,51 @@
+// Startup
+JMP 0x0100
+
+// Main Loop
+SKP 0x0100
+JSR 0x0300 // Call DRAW_HORIZONTAL
+LIA 0x00   // Load A with Zero
+STA 0xF000 // Store A into Screen Pointer X POS
+LDA 0xF001 // Load A with Screen Pointer Y POS
+JSR 0x0500 // Increment A Register
+STA 0xF001 // Store A into Screen Pointer Y POS
+JMP 0x0100
+
+// DRAW_PIXEL Subroutine
+SKP 0x0200
+LDX 0xF000 // get x pos
+LDY 0xF001 // get y pos
+LDA 0xF002
+DRW
+RTS
+
+// DRAW_HORIZONTAL Subroutine
+SKP 0x0300
+JSR 0x0200 // Call DRAW_PIXEL
+LDA 0xF000 // Load A with X POS
+JSR 0x0500 // Increment A
+STA 0xF000 // Store A into X POS
+LIB 0x40   // Loab B with 64 (0x40)
+SUB        // Subtract to check Zero Flag
+JIZ 0x0400 // Break if Zero
+JMP 0x0300 // Otherwise, continue loop
+
+// Break
+SKP 0x0400
+RTS
+
+// Increment A Register
+SKP 0x0500
+LIB 0x01
+ADD
+RTS
+
+// Variables
+VAR 0xF000 0x00 // Screen Pointer X POS
+VAR 0xF001 0x00 // Screen Pointer Y POS
+VAR 0xF002 0x03 // Current Pixel Color
+
+
+
+
+

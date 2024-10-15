@@ -1,0 +1,2 @@
+C:\Users\gabri\source\repos\Assembler\x64\Debug\Assembler.exe
+D:\CPU Stuff\Assembler\x64\Debug\Assembler.exe

@@ -1,0 +1,38 @@
+// Startup
+JMP 0x0100
+
+// Main Loop
+SKP 0x0100
+JSR 0x0200
+JMP 0x0100
+
+// Advance Snake
+SKP 0x0200
+RTS
+
+// Draw Head
+SKP 0x0300
+LDX 0xFD00 // Load X with (Head Pointer)
+LAX 0x4000 // Load A with (Snake Body X Positions) + (Head Pointer)
+STA 0xFD02 // A -> temp
+LDX 0xFD02 // temp -> X
+LDX 0xFD00 // Load X with (Head Pointer)
+LAX 0x4100 // Load A with (Snake Body Y Positions) + (Head Pointer)
+STA 0xFD02 // A -> temp
+LDY 0xFD02 // temp -> Y
+LIA 0x00   // Load Color Green into A Reg (idk what HEX value is green lol, will find out eventually!)
+DRW
+RTS
+
+// Draw Butt
+SKP 0x0400
+RTS
+
+// Arrays
+VAR 0x4000 0x00 // Snake Body X Positions
+VAR 0x4100 0x00 // Snake Body Y Positions
+
+// Variables
+VAR 0xFD00 0x00 // Head Pointer
+VAR 0xFD01 0x00 // Butt Pointer
+VAR 0xFD02 0x00 // Temp Var
